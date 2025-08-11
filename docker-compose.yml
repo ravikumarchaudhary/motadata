@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  log-server:
+    build: ./log-server
+    container_name: log-server
+    environment:
+      - STORAGE_FILE=/data/logs.jsonl
+      - PORT=8081
+    ports:
+      - "8081:8081"
+    volumes:
+      - logs_data:/data
+
+  log-collector:
+    build: ./log-collector
+    container_name: log-collector
+    environment:
+      - PORT=6000
+      - LOG_SERVER_URL=http://log-server:8081/ingest
+    depends_on:
+      - log-server
+
+  client1:
+    build: ./client
+    container_name: client1
+    environment:
+      - COLLECTOR_ADDR=log-collector:6000
+    depends_on:
+      - log-collector
+
+  client2:
+    build: ./client
+    container_name: client2
+    environment:
+      - COLLECTOR_ADDR=log-collector:6000
+    depends_on:
+      - log-collector
+
+volumes:
+  logs_data:
