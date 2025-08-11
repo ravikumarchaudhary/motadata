@@ -1,7 +1,6 @@
 package main
 
 // All the things will run on the localhost server
-
 import (
 	"encoding/json"
 	"flag"
@@ -12,7 +11,6 @@ import (
 	"os"
 	"time"
 )
-
 // time of event hostnamen source type, category, and actual event message.....
 type Msg struct {
 	Timestamp     string `json:"timestamp"`
