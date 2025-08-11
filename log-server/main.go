@@ -41,8 +41,7 @@ type FileStorage struct{
 
 func NewFileStorage(path string) *FileStorage {
     s := &FileStorage{path: path}
-    // load existing if present
-    f, err := os.Open(path)
+    f, err := os.Open(path) // load existing if present
     if err == nil {
         defer f.Close()
         dec := json.NewDecoder(f)
